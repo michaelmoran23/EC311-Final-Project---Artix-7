@@ -25,17 +25,17 @@ module clockDiv25(
   output reg clk_out  // 25MHz output clock
 );
 
-  reg [2:0] counter;    // 2-bit counter for dividing the clock
+  reg [1:0] counter;    // 2-bit counter for dividing the clock
 
     initial begin
     clk_out = 0;
-    counter = 3'd0;
+    counter = 2'd0;
     end 
     
     
   always @(posedge clk_in) begin
-    if (counter == 3'b111) begin
-      counter <= 3'b000;  // Reset the counter when it reaches 7
+    if (counter == 2'b11) begin
+      counter <= 2'b00;  // Reset the counter when it reaches 7
       clk_out <= ~clk_out;  // Toggle the output clock on each division
     end
     else begin
