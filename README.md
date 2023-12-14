@@ -6,7 +6,8 @@ Multi-function Clock
 **Team Members:**
 Michael Moran, Karl Carisme, Santos Zuniga, Waseem Ridhuan
 
-**Link to Demo Video:**
+**Link to Demo Video:** https://drive.google.com/file/d/1f2v_y8bROQ1f6bDfif2bKO4Wk9d_oLJj/view?usp=sharing
+
 
 **Overview of Project:**
 Our goal was to make a 24-hour alarm clock with a stopwatch and a video game, but unfortunately we only managed to implement the 24-hour clock onto the FPGA.
@@ -22,7 +23,4 @@ Clock.v - This module manages the counting of the 24-hour clock.
 DisplayDecoder.v - This module converts the values for hours, minutes, and seconds to separate single digit values that can be pushed to the 7-segment display. For example, 23 hours, 59 minutes, and 55 seconds would be converted to single digit values of 2, 3, 5, 9, 5, and 5.
 
 **Credits:**
-Some contents to produce sounds taken from https://www.fpga4fun.com/MusicBox1.html and altered to fit our needs. 
-
-**Video Link**
-https://drive.google.com/file/d/1f2v_y8bROQ1f6bDfif2bKO4Wk9d_oLJj/view?usp=sharing
+Some contents to produce sounds taken from https://www.fpga4fun.com/MusicBox1.html and altered to fit our needs.
