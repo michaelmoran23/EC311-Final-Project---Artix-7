@@ -23,3 +23,6 @@ DisplayDecoder.v - This module converts the values for hours, minutes, and secon
 
 **Credits:**
 Some contents to produce sounds taken from https://www.fpga4fun.com/MusicBox1.html and altered to fit our needs. 
+
+**Video Link**
+https://drive.google.com/file/d/1f2v_y8bROQ1f6bDfif2bKO4Wk9d_oLJj/view?usp=sharing
