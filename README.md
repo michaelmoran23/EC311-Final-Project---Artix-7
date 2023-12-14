@@ -19,4 +19,4 @@ EnterTime.v - This module accepts the user's value inputs of hours, minutes, and
 
 Clock.v - This module manages the counting of the 24-hour clock.
 
-DisplayDecoder - This module converts the values for hours, minutes, and seconds to separate single digit values that can be pushed to the 7-segment display. For example, 23 hours, 59 minutes, and 55 seconds would be converted to single digit values of 2, 3, 5, 9, 5, and 5.
+DisplayDecoder.v - This module converts the values for hours, minutes, and seconds to separate single digit values that can be pushed to the 7-segment display. For example, 23 hours, 59 minutes, and 55 seconds would be converted to single digit values of 2, 3, 5, 9, 5, and 5.
