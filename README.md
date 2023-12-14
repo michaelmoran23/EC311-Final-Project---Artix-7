@@ -1,4 +1,4 @@
-# EC311-Final-Project---Artix-7
+# EC311 - Final-Project - Artix-7
 
 **Project Name:**
 Multi-function Clock
