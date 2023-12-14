@@ -22,15 +22,16 @@
 
 module EnterTime(
     
-    input [2:0] mode, //Switches different mode or change between hrs, min, sec
+    input clk,
+    input [1:0] mode, //Switches different mode or change between hrs, min, sec
     input switch, //Switch used for turning clock counting on/off
     input [5:0] val, //Value used for changing hrs, min, sec
-    output [5:0] outhrstens, //Value for hrs tens to send to 7-seg display
-    output [5:0] outhrsones, //Value for hrs ones to send to 7-seg display
-    output [5:0] outmintens, //Value for min tens to send to 7-seg display
-    output [5:0] outminones, //Value for min ones to send to 7-seg display
-    output [5:0] outsectens, //Value for sec tens to send to 7-seg display
-    output [5:0] outsecones //Value for sec ones to send to 7-seg display
+    output [3:0] outhrstens, //Value for hrs tens to send to 7-seg display
+    output [3:0] outhrsones, //Value for hrs ones to send to 7-seg display
+    output [3:0] outmintens, //Value for min tens to send to 7-seg display
+    output [3:0] outminones, //Value for min ones to send to 7-seg display
+    output [3:0] outsectens, //Value for sec tens to send to 7-seg display
+    output [3:0] outsecones //Value for sec ones to send to 7-seg display
     
     );
     
@@ -81,6 +82,6 @@ module EnterTime(
     end
     
     //Clock tracks time and returns it
-    Clock clock1(switch, mode, hours, minutes, seconds, outhrstens, outhrsones, outmintens, outminones, outsectens, outsecones);
+    Clock clock1(.clk(clk), .switch(switch), .mode(mode), .inhrs(hours), .inmin(minutes), .insec(seconds), .outhrstens(outhrstens), .outhrsones(outhrsones), .outmintens(outmintens), .outminones(outminones), .outsectens(outsectens), .outsecones(outsecones));
     
 endmodule
