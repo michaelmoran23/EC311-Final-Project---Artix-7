@@ -1,0 +1,58 @@
+# Clock constraint
+set_property -dict { PACKAGE_PIN E3    IOSTANDARD LVCMOS33 } [get_ports { clk }];
+create_clock -add -name sys_clk_pin -period 20.00 -waveform {0 100} [get_ports { clk }];
+
+# Reset, start button, and alarm trigger
+set_property -dict { PACKAGE_PIN N17 IOSTANDARD LVCMOS33 } [get_ports { reset }];
+set_property -dict { PACKAGE_PIN M17 IOSTANDARD LVCMOS33 } [get_ports { start_button }];
+# set_property -dict { PACKAGE_PIN [pin_name] IOSTANDARD LVCMOS33 } [get_ports { alarm_trigger }]; # Uncomment if used
+
+
+
+# Slide switches
+set_property -dict { PACKAGE_PIN J15   IOSTANDARD LVCMOS33 } [get_ports { slide_switches[0] }];
+set_property -dict { PACKAGE_PIN M13   IOSTANDARD LVCMOS33 } [get_ports { slide_switches[1] }];
+set_property -dict { PACKAGE_PIN R17   IOSTANDARD LVCMOS33 } [get_ports { slide_switches[2] }];
+set_property -dict { PACKAGE_PIN R15   IOSTANDARD LVCMOS33 } [get_ports { slide_switches[3] }];
+set_property -dict { PACKAGE_PIN T8   IOSTANDARD LVCMOS33 } [get_ports { slide_switches[4] }];
+set_property -dict { PACKAGE_PIN U8   IOSTANDARD LVCMOS33 } [get_ports { slide_switches[5] }];
+set_property -dict { PACKAGE_PIN T13   IOSTANDARD LVCMOS33 } [get_ports { slide_switches[6] }];
+set_property -dict { PACKAGE_PIN H6   IOSTANDARD LVCMOS33 } [get_ports { slide_switches[7] }];
+
+# LEDs
+set_property -dict { PACKAGE_PIN H17   IOSTANDARD LVCMOS33 } [get_ports { leds[0] }];
+set_property -dict { PACKAGE_PIN J13   IOSTANDARD LVCMOS33 } [get_ports { leds[1] }];
+set_property -dict { PACKAGE_PIN R18   IOSTANDARD LVCMOS33 } [get_ports { leds[2] }];
+set_property -dict { PACKAGE_PIN N14   IOSTANDARD LVCMOS33 } [get_ports { leds[3] }];
+set_property -dict { PACKAGE_PIN V16   IOSTANDARD LVCMOS33 } [get_ports { leds[4] }];
+set_property -dict { PACKAGE_PIN T15   IOSTANDARD LVCMOS33 } [get_ports { leds[5] }];
+set_property -dict { PACKAGE_PIN T16   IOSTANDARD LVCMOS33 } [get_ports { leds[6] }];
+set_property -dict { PACKAGE_PIN V15   IOSTANDARD LVCMOS33 } [get_ports { leds[7] }];
+
+set_property -dict { PACKAGE_PIN T10   IOSTANDARD LVCMOS33 } [get_ports { segment_value[0] }]; # Segment A
+set_property -dict { PACKAGE_PIN R10   IOSTANDARD LVCMOS33 } [get_ports { segment_value[1] }]; # Segment B
+set_property -dict { PACKAGE_PIN K16   IOSTANDARD LVCMOS33 } [get_ports { segment_value[2] }]; # Segment C
+set_property -dict { PACKAGE_PIN K13   IOSTANDARD LVCMOS33 } [get_ports { segment_value[3] }]; # Segment D
+set_property -dict { PACKAGE_PIN P15   IOSTANDARD LVCMOS33 } [get_ports { segment_value[4] }]; # Segment E
+set_property -dict { PACKAGE_PIN T11   IOSTANDARD LVCMOS33 } [get_ports { segment_value[5] }]; # Segment F
+set_property -dict { PACKAGE_PIN L18   IOSTANDARD LVCMOS33 } [get_ports { segment_value[6] }]; # Segment G
+set_property -dict { PACKAGE_PIN H15   IOSTANDARD LVCMOS33 } [get_ports { segment_value[7] }]; # Decimal Point
+
+# Anode control for each of the 8 digits
+set_property -dict { PACKAGE_PIN U13    IOSTANDARD LVCMOS33 } [get_ports { anode_control[0] }]; # Digit 1
+set_property -dict { PACKAGE_PIN K2     IOSTANDARD LVCMOS33 } [get_ports { anode_control[1] }]; # Digit 2
+set_property -dict { PACKAGE_PIN T14    IOSTANDARD LVCMOS33 } [get_ports { anode_control[2] }]; # Digit 3
+set_property -dict { PACKAGE_PIN P14    IOSTANDARD LVCMOS33 } [get_ports { anode_control[3] }]; # Digit 4
+set_property -dict { PACKAGE_PIN J14    IOSTANDARD LVCMOS33 } [get_ports { anode_control[4] }]; # Digit 5
+set_property -dict { PACKAGE_PIN T9     IOSTANDARD LVCMOS33 } [get_ports { anode_control[5] }]; # Digit 6
+set_property -dict { PACKAGE_PIN J18    IOSTANDARD LVCMOS33 } [get_ports { anode_control[6] }]; # Digit 7
+set_property -dict { PACKAGE_PIN J17    IOSTANDARD LVCMOS33 } [get_ports { anode_control[7] }]; # Digit 8
+
+  
+set_property CONFIG_VOLTAGE 3.3 [current_design]  
+set_property CFGBVS VCCO [current_design]
+
+
+
+set_property IOSTANDARD LVCMOS33 [get_ports {alarm_trigger}]
+
