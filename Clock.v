@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 12/12/2023 10:56:22 AM
+// Create Date: 12/11/2023 03:19:33 PM
 // Design Name: 
-// Module Name: EnterTime
+// Module Name: Clock
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,141 +20,83 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module EnterTime(
+module Clock(
     
-    input [2:0] mode, //Switches different mode or change between hrs, min, sec
-    input switch, //Switch used for turning clock counting on/off
-    input [5:0] val, //Value used for changing hrs, min, sec
-    output [3:0] outhrstens, //Value for hrs tens to send to 7-seg display
-    output [3:0] outhrsones, //Value for hrs ones to send to 7-seg display
-    output [3:0] outmintens, //Value for min tens to send to 7-seg display
-    output [3:0] outminones, //Value for min ones to send to 7-seg display
-    output [3:0] outsectens, //Value for sec tens to send to 7-seg display
-    output [3:0] outsecones //Value for sec ones to send to 7-seg display
+    input clk,
+    input switch, //Switch to turn clock on/off
+    input [1:0] mode, //Switch to also turn clock on/off
+    input [4:0] inhrs, //Input hrs from user
+    input [5:0] inmin, //Input min from user
+    input [5:0] insec, //Input sec from user
+    output [3:0] outhrstens, //Counted hrs tens
+    output [3:0] outhrsones, //Counted hrs ones
+    output [3:0] outmintens, //Counted min tens
+    output [3:0] outminones, //Counted min ones
+    output [3:0] outsectens, //Counted sec tens
+    output [3:0] outsecones //Counted sec ones
     
     );
     
-    reg [4:0] hours;
-    reg [5:0] minutes;
-    reg [5:0] seconds;
-    wire [5:0] hrstensc;
-    wire [5:0] hrsonesc;
-    wire [5:0] mintensc;
-    wire [5:0] minonesc;
-    wire [5:0] sectensc;
-    wire [5:0] seconesc;
-    wire [5:0] hrstensd;
-    wire [5:0] hrsonesd;
-    wire [5:0] mintensd;
-    wire [5:0] minonesd;
-    wire [5:0] sectensd;
-    wire [5:0] seconesd;
-    reg [5:0] hrstensf;
-    reg [5:0] hrsonesf;
-    reg [5:0] mintensf;
-    reg [5:0] minonesf;
-    reg [5:0] sectensf;
-    reg [5:0] seconesf;
-    
-    
+    integer clkcycles;
+    reg [5:0] numsec;
+    reg [5:0] nummin;
+    reg [4:0] numhrs;
+    reg start; /*Used to initialize numsec, nummin, numhrs,
+                and clkcycles in second always loop*/
     initial begin
-    
-        hours = 0;
-        minutes = 0;
-        seconds= 0;
-        hrstensf = 0;
-        hrsonesf = 0;
-        mintensf = 0;
-        minonesf = 0;
-        sectensf = 0;
-        seconesf = 0;
+        
+        start = 1;
     
     end
     
-    always @ (*) begin
+    //always #500 clk = ~clk; //500 ns for each clk value change
+    
+    always @ (posedge clk) begin
         
-        if(mode == 1) begin
-        
-            if(val >= 59) begin
+        if(switch == 1 && mode == 0) begin /*Only when switch is on
+                                           and mode is equal to 0
+                                           does clock start*/
             
-                seconds = 59;
+            if(start == 1) begin
             
-            end else begin
-            
-                seconds = val; // Mode 1 changes seconds
+                start = 0;
+                numsec = insec;
+                nummin = inmin;
+                numhrs = inhrs;
+                clkcycles = 0;
             
             end
-        
-        end else begin
-        
-            if(mode == 2) begin
+            clkcycles = clkcycles + 1;
+            if(clkcycles == 100000000) begin
+            //One cycle is 1000 ns, 1000ns*10^8ns = 1s
+            
+                clkcycles = 0; //Reset cycles after 1s
+                numsec = numsec + 1;
+                if(numsec == 60) begin
+                //If hrs, min, sec overflow, reset to 0
                 
-                if(val >= 59) begin
-                
-                    minutes = 59;
-                
-                end else begin
-                
-                    minutes = val; //Mode 2 changes min
-                
+                    numsec = 0;
+                    nummin = nummin + 1;
+            
                 end
+                if(nummin == 60) begin
             
-            end else begin
+                    nummin = 0;
+                    numhrs = numhrs + 1;
             
-                if(mode == 3) begin
-                    
-                    if(val >= 23) begin //Cannot set hrs to more than 23
-                    
-                        hours = 23;
-                    
-                    end else begin
-                    
-                        hours = val; //Mode 3 changes hrs
-                    
-                    end
-                
+                end
+                if(numhrs == 24) begin
+            
+                    numhrs = 0;
+            
                 end
             
             end
-        
+            
         end
-    
+        
     end
-    
-    always @ (*) begin
-    
-        if(mode == 0) begin
-        
-            hrstensf = hrstensc;
-            hrsonesf = hrsonesc;
-            mintensf = mintensc;
-            minonesf = minonesc;
-            sectensf = sectensc;
-            seconesf = seconesc;
-        
-        end else begin
-        
-            hrstensf = hrstensd;
-            hrsonesf = hrsonesd;
-            mintensf = mintensd;
-            minonesf = minonesd;
-            sectensf = sectensd;
-            seconesf = seconesd;
-        
-        end
-    
-    end
-    
-    assign outhrstens = hrstensf[3:0];
-    assign outhrsones = hrsonesf[3:0];
-    assign outmintens = mintensf[3:0];
-    assign outminones = minonesf[3:0];
-    assign outsectens = sectensf[3:0];
-    assign outsecones = seconesf[3:0];
-    
-    //Clock tracks time and returns it
-    Clock clock1(switch, mode, hours, minutes, seconds, hrstensc, hrsonesc, mintensc, minonesc, sectensc, seconesc);
-    
-    DisplayDecoder decoder1(hours, minutes, seconds, hrstensd, hrsonesd, mintensd, minonesd, sectensd, seconesd);
+   
+   DisplayDecoder decoder1(numhrs, nummin, numsec, outhrstens, outhrsones, outmintens, outminones, outsectens, outsecones);
     
 endmodule

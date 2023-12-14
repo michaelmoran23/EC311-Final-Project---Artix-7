@@ -25,12 +25,12 @@ module DisplayDecoder(
     input [4:0] inhrs,
     input [5:0] inmin,
     input [5:0] insec,
-    output [5:0] outhrstens,
-    output [5:0] outhrsones,
-    output [5:0] outmintens,
-    output [5:0] outminones,
-    output [5:0] outsectens,
-    output [5:0] outsecones
+    output [3:0] outhrstens,
+    output [3:0] outhrsones,
+    output [3:0] outmintens,
+    output [3:0] outminones,
+    output [3:0] outsectens,
+    output [3:0] outsecones
 
     );
     
@@ -80,12 +80,12 @@ module DisplayDecoder(
     
     end
     
-    assign outhrstens = hrstens;
-    assign outhrsones = hrsones;
-    assign outmintens = mintens;
-    assign outminones = minones;
-    assign outsectens = sectens;
-    assign outsecones = secones;
+    assign outhrstens = hrstens[3:0];
+    assign outhrsones = hrsones[3:0];
+    assign outmintens = mintens[3:0];
+    assign outminones = minones[3:0];
+    assign outsectens = sectens[3:0];
+    assign outsecones = secones[3:0];
     
     
 endmodule
