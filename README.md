@@ -1,7 +1,7 @@
 # EC311 - Final-Project - Artix-7
 
 **Project Name:**
-Multi-function Clock
+Digital Clock
 
 **Team Members:**
 Michael Moran, Karl Carisme, Santos Zuniga, Waseem Ridhuan
