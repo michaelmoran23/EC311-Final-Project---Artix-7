@@ -35,29 +35,70 @@ module EnterTime(
     
     );
     
+   
     reg [4:0] hours;
     reg [5:0] minutes;
     reg [5:0] seconds;
+    wire [5:0] hrstensc;
+    wire [5:0] hrsonesc;
+    wire [5:0] mintensc;
+    wire [5:0] minonesc;
+    wire [5:0] sectensc;
+    wire [5:0] seconesc;
+    wire [5:0] hrstensd;
+    wire [5:0] hrsonesd;
+    wire [5:0] mintensd;
+    wire [5:0] minonesd;
+    wire [5:0] sectensd;
+    wire [5:0] seconesd;
+    reg [5:0] hrstensf;
+    reg [5:0] hrsonesf;
+    reg [5:0] mintensf;
+    reg [5:0] minonesf;
+    reg [5:0] sectensf;
+    reg [5:0] seconesf;
     
     initial begin
     
         hours = 0;
         minutes = 0;
         seconds= 0;
+        hrstensf = 0;
+        hrsonesf = 0;
+        mintensf = 0;
+        minonesf = 0;
+        sectensf = 0;
+        seconesf = 0;
     
     end
     
-    always @ (mode, val) begin
+     always @ (*) begin
         
         if(mode == 1) begin
         
-            seconds = val; // Mode 1 changes seconds
+            if(val >= 59) begin
+            
+                seconds = 59;
+            
+            end else begin
+            
+                seconds = val; // Mode 1 changes seconds
+            
+            end
         
         end else begin
         
             if(mode == 2) begin
-            
-                minutes = val; //Mode 2 changes min
+                
+                if(val >= 59) begin
+                
+                    minutes = 59;
+                
+                end else begin
+                
+                    minutes = val; //Mode 2 changes min
+                
+                end
             
             end else begin
             
@@ -81,7 +122,43 @@ module EnterTime(
     
     end
     
+    always @ (*) begin
+    
+        if(mode == 0) begin
+        
+            hrstensf = hrstensc;
+            hrsonesf = hrsonesc;
+            mintensf = mintensc;
+            minonesf = minonesc;
+            sectensf = sectensc;
+            seconesf = seconesc;
+        
+        end else begin
+        
+            hrstensf = hrstensd;
+            hrsonesf = hrsonesd;
+            mintensf = mintensd;
+            minonesf = minonesd;
+            sectensf = sectensd;
+            seconesf = seconesd;
+        
+        end
+    
+    end
+    
+    assign outhrstens = hrstensf[3:0];
+    assign outhrsones = hrsonesf[3:0];
+    assign outmintens = mintensf[3:0];
+    assign outminones = minonesf[3:0];
+    assign outsectens = sectensf[3:0];
+    assign outsecones = seconesf[3:0];
+    
+    
+    
     //Clock tracks time and returns it
-    Clock clock1(.clk(clk), .switch(switch), .mode(mode), .inhrs(hours), .inmin(minutes), .insec(seconds), .outhrstens(outhrstens), .outhrsones(outhrsones), .outmintens(outmintens), .outminones(outminones), .outsectens(outsectens), .outsecones(outsecones));
+    Clock clock1(clk, switch, mode, hours, minutes, seconds, hrstensc, hrsonesc, mintensc, minonesc, sectensc, seconesc);
+    
+    DisplayDecoder decoder1(hours, minutes, seconds, hrstensd, hrsonesd, mintensd, minonesd, sectensd, seconesd);
+
     
 endmodule
